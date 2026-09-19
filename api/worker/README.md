@@ -13,9 +13,13 @@ sincronizar entre dispositivos e para enviar arquivos.
 
 ## Implantação
 
-> Ambiente atual: publicado pelo dashboard em 19/09/2026 (ver `PENDENCIAS.md`).
-> Ao alterar `src/index.js`, republique — colando o arquivo no editor do
-> dashboard ou conectando o repositório em *Settings → Build*.
+> Ao alterar `src/index.js`, **aumente a constante `BUILD` no topo do arquivo**:
+> ela aparece em `GET /api/health` e é a única forma de conferir, de fora, qual
+> versão está publicada.
+>
+> Prefira publicar a partir do repositório (*Settings → Build*, diretório raiz
+> `api/worker`) em vez de colar o código no editor do dashboard — ver
+> `PENDENCIAS.md`.
 
 ```bash
 cd api/worker
@@ -54,7 +58,7 @@ wrangler dev          # http://localhost:8787
 
 | Método | Rota | Descrição |
 |---|---|---|
-| GET | `/api/health` | diagnóstico: responde se D1 e R2 estão ligados |
+| GET | `/api/health` | diagnóstico: `build` da versão no ar e se D1/R2 estão ligados |
 | POST | `/api/auth/login` | `{ senha }` → `{ token, expira }` (HMAC-SHA256, 12 h) |
 | GET | `/api/projects` | lista projetos com seus blocos |
 | GET | `/api/projects/:id` | um projeto |

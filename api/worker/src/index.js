@@ -29,6 +29,10 @@
  * =============================================================================
  */
 
+// Carimbo da versão publicada. AUMENTE a cada alteração neste arquivo: é o que
+// permite confirmar, por GET /api/health, se o deploy trouxe o código novo.
+const BUILD = '2026-09-19.3';
+
 const TOKEN_TTL = 60 * 60 * 12;      // validade do token de sessão
 const LOGIN_JANELA_MIN = 15;         // janela de contagem de tentativas
 const LOGIN_MAX_FALHAS = 10;         // falhas por IP antes do bloqueio temporário
@@ -67,6 +71,7 @@ async function rotear(request, env, url) {
       ok: true,
       servico: 'portal-tcc-abnt',
       versao: '1.0.0',
+      build: BUILD,
       d1: !!env.DB,
       r2: !!env.ARQUIVOS,
       at: new Date().toISOString()
@@ -417,14 +422,11 @@ async function enviarArquivo(request, env) {
     }
   }
 
-  return respostaJson({
-    ok: true,
-    chave,
-    nome,
-    tamanho: arquivo.size,
-    url: (env.R2_PUBLIC_URL ? env.R2_PUBLIC_URL.replace(/\/+$/, '') + '/' + chave
-      : '/api/files/' + encodeURIComponent(chave))
-  });
+  const urlPublica = env.R2_PUBLIC_URL
+    ? env.R2_PUBLIC_URL.replace(/\/+$/, '') + '/' + chave
+    : '/api/files/' + encodeURIComponent(chave);
+
+  return respostaJson({ ok: true, chave, nome, tamanho: arquivo.size, url: urlPublica });
 }
 
 async function listarArquivos(env, url) {

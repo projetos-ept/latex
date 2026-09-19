@@ -11,9 +11,12 @@ compatibility_date = "2025-09-01"
 workers_dev = true
 
 # ---------------------------------------------------------------- variáveis --
+# ATENÇÃO: em um deploy a partir do repositório, estas [vars] SOBRESCREVEM o que
+# estiver configurado no dashboard. Mantenha-as como a fonte da verdade.
 [vars]
-# Trocar por "https://projetos-ept.github.io" assim que o GitHub Pages estiver no ar.
-ORIGENS_PERMITIDAS = "*"
+# Origens autorizadas a chamar a API (cabeçalho Origin: protocolo + domínio, sem
+# caminho). Os endereços locais servem para testar o portal contra a API real.
+ORIGENS_PERMITIDAS = "https://projetos-ept.github.io,http://localhost:8080,http://127.0.0.1:8080"
 # Domínio público do bucket R2, se você configurar um. Vazio = servir via Worker.
 R2_PUBLIC_URL = ""
 
