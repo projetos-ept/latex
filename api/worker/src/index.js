@@ -29,7 +29,9 @@
  * =============================================================================
  */
 
-const TOKEN_TTL = 60 * 60 * 12; // 12 horas
+const TOKEN_TTL = 60 * 60 * 12;      // validade do token de sessão
+const LOGIN_JANELA_MIN = 15;         // janela de contagem de tentativas
+const LOGIN_MAX_FALHAS = 10;         // falhas por IP antes do bloqueio temporário
 
 export default {
   async fetch(request, env) {
@@ -108,7 +110,13 @@ async function login(request, env) {
   if (!env.ADMIN_SENHA) {
     return json({ error: 'ADMIN_SENHA não configurada no Worker' }, 503, env, request);
   }
-  if (!corpo.senha || corpo.senha !== env.ADMIN_SENHA) {
+  if (await bloqueadoPorTentativas(env, request)) {
+    await registrar(env, 'login_bloqueado', request);
+    return json({
+      error: 'muitas tentativas. Aguarde ' + LOGIN_JANELA_MIN + ' minutos e tente novamente.'
+    }, 429, env, request);
+  }
+  if (!corpo.senha || !igualdadeConstante(String(corpo.senha), env.ADMIN_SENHA)) {
     await registrar(env, 'login_falhou', request);
     return json({ error: 'senha inválida' }, 401, env, request);
   }
@@ -116,6 +124,33 @@ async function login(request, env) {
   const token = await assinarToken('usr_admin', expira, env);
   await registrar(env, 'login_ok', request);
   return json({ token, expira, papel: 'admin' }, 200, env, request);
+}
+
+/** Conta falhas recentes do mesmo IP para frear tentativa de força bruta. */
+async function bloqueadoPorTentativas(env, request) {
+  if (!env.DB) return false;
+  const ip = request.headers.get('CF-Connecting-IP') || '';
+  if (!ip) return false;
+  try {
+    const linha = await env.DB.prepare(
+      `SELECT COUNT(*) AS n FROM audit_log
+        WHERE acao = 'login_falhou' AND ip = ?1
+          AND at > datetime('now', ?2)`
+    ).bind(ip, '-' + LOGIN_JANELA_MIN + ' minutes').first();
+    return !!linha && linha.n >= LOGIN_MAX_FALHAS;
+  } catch (e) {
+    return false; // indisponibilidade do log nunca deve impedir o login legítimo
+  }
+}
+
+/** Comparação em tempo constante, para não vazar o tamanho/prefixo da senha. */
+function igualdadeConstante(a, b) {
+  const x = new TextEncoder().encode(a);
+  const y = new TextEncoder().encode(b);
+  let diff = x.length ^ y.length;
+  const n = Math.max(x.length, y.length, 1);
+  for (let i = 0; i < n; i++) diff |= (x[i] || 0) ^ (y[i] || 0);
+  return diff === 0;
 }
 
 async function exigirAuth(request, env) {
@@ -353,6 +388,15 @@ async function enviarArquivo(request, env) {
   const limite = 25 * 1024 * 1024; // 25 MB
   if (arquivo.size > limite) throw httpError(413, 'arquivo acima de 25 MB');
 
+  // files.project_id tem chave estrangeira: enviar antes de sincronizar o
+  // projeto gravaria um objeto no R2 que o banco recusaria depois.
+  if (projectId && env.DB) {
+    const existe = await env.DB.prepare('SELECT id FROM projects WHERE id = ?').bind(projectId).first();
+    if (!existe) {
+      throw httpError(409, 'projeto ainda não sincronizado no servidor: sincronize antes de enviar arquivos');
+    }
+  }
+
   const nome = (arquivo.name || 'arquivo').replace(/[^\w.\-]+/g, '_');
   const chave = (projectId ? projectId + '/' : 'geral/') + Date.now().toString(36) + '-' + nome;
 
@@ -361,10 +405,16 @@ async function enviarArquivo(request, env) {
   });
 
   if (env.DB) {
-    await env.DB.prepare(
-      `INSERT OR REPLACE INTO files (chave, project_id, nome, mime, tamanho)
-       VALUES (?1,?2,?3,?4,?5)`
-    ).bind(chave, projectId, nome, arquivo.type || '', arquivo.size).run();
+    try {
+      await env.DB.prepare(
+        `INSERT OR REPLACE INTO files (chave, project_id, nome, mime, tamanho)
+         VALUES (?1,?2,?3,?4,?5)`
+      ).bind(chave, projectId, nome, arquivo.type || '', arquivo.size).run();
+    } catch (err) {
+      // Desfaz o envio para não deixar objeto órfão no bucket.
+      await bucket.delete(chave).catch(() => {});
+      throw httpError(500, 'falha ao registrar o arquivo: ' + err.message);
+    }
   }
 
   return respostaJson({

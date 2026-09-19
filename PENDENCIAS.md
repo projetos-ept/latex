@@ -1,81 +1,42 @@
 # Pendências
 
-O portal está **funcional e completo em modo local**. As pendências abaixo são
-de *infraestrutura* — nenhuma delas impede escrever, citar, gerar o LaTeX ou
-exportar para o Overleaf.
+Infraestrutura Cloudflare **provisionada e testada em 19/09/2026**. O que resta
+está listado no topo; o histórico de implantação fica logo abaixo, como
+referência para recriar o ambiente.
 
 ---
 
-## 1. API (Cloudflare Worker) — opcional
+## Em aberto
 
-**Para quê:** sincronizar trabalhos e biblioteca entre computador e celular e
-manter uma cópia fora do navegador.
+### 1. Republicar o Worker após mudanças no código
 
-**Estado:** código pronto em `api/worker/src/index.js`, esquema em
-`database/migrations/0001_init.sql`, cliente pronto em `portal/js/api.js`.
+O Worker foi implantado colando `api/worker/src/index.js` no editor do
+dashboard. **Sempre que esse arquivo mudar no repositório, é preciso colar a
+versão nova e clicar em Deploy** — o dashboard não acompanha o Git.
 
-**Falta:** criar os recursos na conta Cloudflare e colar os identificadores.
+Pendente agora: as correções de 19/09/2026 (bloqueio de força bruta no login e
+tratamento de upload sem projeto sincronizado) ainda não estão publicadas.
 
-```bash
-cd api/worker
-npm install
-wrangler login
+Alternativa definitiva, que elimina a colagem manual: em *Workers & Pages →
+portal-tcc-api → Settings → Build*, conectar o repositório GitHub com diretório
+raiz `api/worker`. A partir daí o `wrangler.toml` deste repositório (que já tem
+o `database_id` correto) passa a comandar os deploys.
 
-wrangler d1 create portal-tcc
-#   → copie o database_id para wrangler.toml ([[d1_databases]].database_id)
-wrangler d1 execute portal-tcc --remote --file=../../database/migrations/0001_init.sql
-wrangler d1 execute portal-tcc --remote --file=../../database/migrations/0002_seed.sql
+### 2. Publicar o portal no GitHub Pages
 
-wrangler r2 bucket create portal-tcc-arquivos
+Em *Settings → Pages*, defina **Source: GitHub Actions**. O workflow
+`.github/workflows/deploy-pages.yml` publica a pasta `portal/` como raiz do
+site, de modo que o endereço final é `https://projetos-ept.github.io/latex/` —
+exatamente a origem já autorizada no Worker. O workflow dispara em push para
+`main`, ou seja, após o merge do PR.
 
-wrangler secret put ADMIN_SENHA     # senha do login administrativo
-wrangler secret put TOKEN_SEGREDO   # string aleatória longa (assinatura das sessões)
+### 3. Ativar a sincronização no portal
 
-wrangler deploy                     # imprime a URL do Worker
-```
+No portal: **Configurações → API (Cloudflare Worker)** → *Testar conexão* →
+*Autenticar* (digite a `ADMIN_SENHA`) → marque **Sincronização**. A URL do
+Worker já vem preenchida por `portal/js/config.js`.
 
-Depois, no portal: **Configurações → API (Cloudflare Worker)**
-
-| Campo | Valor |
-|---|---|
-| URL do Worker | `https://portal-tcc-api.<subdominio>.workers.dev` |
-| Token de sessão | preenchido pelo botão **Autenticar** |
-| Sincronização | marcar |
-
-Use **Testar conexão** (chama `/api/health`) antes de ativar.
-
-### Dados que faltam preencher
-
-| Arquivo | Campo | Valor |
-|---|---|---|
-| `api/worker/wrangler.toml` | `[[d1_databases]].database_id` | `PREENCHER-COM-O-ID-DO-D1` |
-| `api/worker/wrangler.toml` | `[[r2_buckets]].bucket_name` | confirmar o nome criado |
-| `api/worker/wrangler.toml` | `[vars].ORIGENS_PERMITIDAS` | trocar `*` pelo domínio do portal |
-| `api/worker/wrangler.toml` | `[vars].R2_PUBLIC_URL` | só se houver domínio público no bucket |
-| segredo | `ADMIN_SENHA` | `wrangler secret put` |
-| segredo | `TOKEN_SEGREDO` | `wrangler secret put` |
-| `portal/js/config.js` | `apiBaseUrl` | opcional: fixar a URL no código em vez de digitar em Configurações |
-
-## 2. Armazenamento R2 — opcional
-
-**Para quê:** guardar a ficha catalográfica, a folha de aprovação assinada e as
-imagens do trabalho.
-
-**Estado:** rotas `POST/GET/DELETE /api/files` implementadas (limite de 25 MB
-por arquivo, chave normalizada, registro na tabela `files`).
-
-**Falta:** criar o bucket (comando acima) e, se quiser servir os arquivos por
-domínio próprio, publicar o bucket e preencher `R2_PUBLIC_URL`.
-
-Sem R2, coloque as imagens direto na pasta `figuras/` do projeto no Overleaf —
-o portal já gera as chamadas `\includegraphics{figuras/...}` corretas.
-
-## 3. Publicação no GitHub Pages
-
-O workflow `.github/workflows/deploy-pages.yml` já existe. Falta apenas ativar:
-**Settings → Pages → Source: GitHub Actions**.
-
-## 4. Documentos institucionais do trabalho
+### 4. Documentos institucionais do trabalho
 
 Fornecidos pela instituição, não pelo portal:
 
@@ -84,10 +45,47 @@ Fornecidos pela instituição, não pelo portal:
 - **folha de aprovação assinada** — gerada após a defesa; substitui
   `pretextual/folha-de-aprovacao.tex`, que sai como modelo preenchível.
 
-## 5. Evolução prevista (fora do escopo atual)
+### 5. Evolução prevista (fora do escopo atual)
 
 - multiusuário com orientadores e permissões (tabela `users` e `papel` já
   existem no esquema);
 - integrações ORCID, CrossRef e DOI para preencher referências automaticamente;
 - comentários do orientador por bloco;
 - compilação de PDF no servidor.
+
+---
+
+## Ambiente provisionado
+
+| Recurso | Valor |
+|---|---|
+| Worker | `portal-tcc-api` — https://portal-tcc-api.lucas-batista-biomedico.workers.dev |
+| Banco D1 | `portal-tcc` — `aec7a4a3-b1ec-47fc-9a18-18c17cccd8b0` (7 tabelas) |
+| Bucket R2 | `portal-tcc-arquivos` — privado, servido pelo Worker |
+| Bindings | `DB` → D1, `ARQUIVOS` → R2 |
+| Variáveis | `ORIGENS_PERMITIDAS = https://projetos-ept.github.io`, `R2_PUBLIC_URL` vazio |
+| Segredos | `ADMIN_SENHA`, `TOKEN_SEGREDO` (criptografados no Worker) |
+
+Verificação na implantação: `/api/health` respondeu `d1: true` e `r2: true`;
+`/api/projects` sem token respondeu `401`; senha incorreta respondeu `401`
+(e não `503`, o que confirma o segredo lido corretamente).
+
+## Como recriar o ambiente por linha de comando
+
+O `wrangler.toml` já contém os identificadores reais, então basta:
+
+```bash
+cd api/worker
+npm install
+wrangler login
+
+# só se for um ambiente novo:
+wrangler d1 create portal-tcc      # e atualize database_id no wrangler.toml
+wrangler d1 execute portal-tcc --remote --file=../../database/migrations/0001_init.sql
+wrangler d1 execute portal-tcc --remote --file=../../database/migrations/0002_seed.sql
+wrangler r2 bucket create portal-tcc-arquivos
+
+wrangler secret put ADMIN_SENHA
+wrangler secret put TOKEN_SEGREDO
+wrangler deploy
+```
