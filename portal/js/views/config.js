@@ -44,16 +44,13 @@
 
           '<div class="card pad-lg" id="formApi">' +
             '<h2>API (Cloudflare Worker)</h2>' +
-            '<div class="callout warn small" style="margin-bottom:14px">' +
-              '<strong>Pendência de implantação.</strong> O Worker, o banco D1 e o bucket R2 estão prontos em ' +
-              '<code>api/worker/</code> e <code>database/migrations/</code>. Depois de publicar com <code>wrangler deploy</code>, ' +
-              'cole aqui a URL gerada. Sem isso, o portal continua funcionando 100% offline no navegador.' +
-            '</div>' +
+            avisoApi() +
             '<div class="form-grid">' +
-              field('URL do Worker', 'apiBaseUrl', s.apiBaseUrl, 'https://portal-tcc-api.seu-subdominio.workers.dev',
+              field('URL do Worker', 'apiBaseUrl', s.apiBaseUrl || P.config.apiBaseUrl,
+                'https://portal-tcc-api.seu-subdominio.workers.dev',
                 'Rota de verificação: <code>/api/health</code>', 'url') +
               field('Token de sessão', 'apiToken', s.apiToken, '', 'Obtido no login administrativo (<code>/api/auth/login</code>).', 'password') +
-              field('URL pública do R2', 'r2PublicUrl', s.r2PublicUrl, 'https://arquivos.seudominio.br',
+              field('URL pública do R2', 'r2PublicUrl', s.r2PublicUrl || P.config.r2PublicUrl, 'https://arquivos.seudominio.br',
                 'Opcional: domínio público do bucket. Sem ele, os arquivos são servidos pelo próprio Worker.', 'url') +
               '<div class="field"><label>Sincronização</label>' +
                 '<label class="check" style="margin-top:6px"><input type="checkbox" name="syncEnabled"' + (s.syncEnabled ? ' checked' : '') + '>' +
@@ -78,21 +75,17 @@
               linha('API configurada', P.Api.configured() ? 'sim' : 'não') +
               linha('Sincronização', P.Api.enabled() ? 'ativa' : 'desligada') +
               linha('Última resposta da API', P.Api.online === null ? '—' : (P.Api.online ? 'ok' : U.esc(P.Api.lastError || 'falha'))) +
+              (P.Api.lastHealth
+                ? linha('Versão publicada da API', U.esc(P.Api.lastHealth.build || 'sem carimbo')) +
+                  linha('Banco D1 / bucket R2', (P.Api.lastHealth.d1 ? 'ligado' : 'ausente') + ' / ' +
+                    (P.Api.lastHealth.r2 ? 'ligado' : 'ausente')) +
+                  linha('Verificado em', U.fmtDateTime(P.Api.lastCheckAt))
+                : '') +
               linha('Service worker (PWA)', ('serviceWorker' in navigator) ? 'suportado' : 'não suportado') +
             '</tbody></table>' +
           '</div>' +
 
-          '<div class="card">' +
-            '<h2>Pendências de infraestrutura</h2>' +
-            '<ol class="soft small" style="margin:0;padding-left:18px;line-height:1.8">' +
-              '<li><code>wrangler d1 create portal-tcc</code> e aplique <code>database/migrations/0001_init.sql</code>.</li>' +
-              '<li><code>wrangler r2 bucket create portal-tcc-arquivos</code>.</li>' +
-              '<li>Preencha <code>database_id</code> e <code>bucket_name</code> em <code>api/worker/wrangler.toml</code>.</li>' +
-              '<li>Defina o segredo: <code>wrangler secret put ADMIN_SENHA</code>.</li>' +
-              '<li><code>wrangler deploy</code> e cole a URL no campo ao lado.</li>' +
-            '</ol>' +
-            '<p class="muted small" style="margin:10px 0 0">Detalhes em <code>PENDENCIAS.md</code> e <code>api/worker/README.md</code>.</p>' +
-          '</div>' +
+          cardInfra() +
         '</div></div>';
 
       U.on(root, 'click', '[data-act="salvar-pessoal"]', function () {
@@ -144,6 +137,54 @@
       });
     }
   };
+
+  /** O aviso muda conforme a API já estar publicada ou não. */
+  function avisoApi() {
+    if (!P.Api.configured()) {
+      return '<div class="callout warn small" style="margin-bottom:14px">' +
+        '<strong>API ainda não publicada.</strong> O Worker, o esquema do banco e as rotas de arquivos ' +
+        'estão prontos em <code>api/worker/</code> e <code>database/migrations/</code>. Publique com ' +
+        '<code>wrangler deploy</code> e cole aqui a URL gerada. Sem isso, o portal funciona 100% offline ' +
+        'no navegador — nada se perde.' +
+        '</div>';
+    }
+    return '<div class="callout ok small" style="margin-bottom:14px">' +
+      '<strong>API publicada.</strong> A URL abaixo já vem configurada. Para sincronizar: ' +
+      '<em>Testar conexão</em> → <em>Autenticar</em> (senha administrativa) → marque ' +
+      '<em>Sincronização</em> e salve. O token de sessão vale 12 horas e fica apenas neste navegador.' +
+      '</div>';
+  }
+
+  /** Cartão lateral: recursos no ar, ou o passo a passo de implantação. */
+  function cardInfra() {
+    var infra = P.config.infra || {};
+    if (!P.Api.configured()) {
+      return '<div class="card">' +
+        '<h2>Como publicar a API</h2>' +
+        '<ol class="soft small" style="margin:0;padding-left:18px;line-height:1.8">' +
+          '<li><code>wrangler d1 create ' + U.esc(infra.d1 || 'portal-tcc') + '</code> e aplique ' +
+            '<code>database/migrations/0001_init.sql</code>.</li>' +
+          '<li><code>wrangler r2 bucket create ' + U.esc(infra.r2 || 'portal-tcc-arquivos') + '</code>.</li>' +
+          '<li>Preencha <code>database_id</code> em <code>api/worker/wrangler.toml</code>.</li>' +
+          '<li><code>wrangler secret put ADMIN_SENHA</code> e <code>TOKEN_SEGREDO</code>.</li>' +
+          '<li><code>wrangler deploy</code> e cole a URL no campo ao lado.</li>' +
+        '</ol>' +
+        '<p class="muted small" style="margin:10px 0 0">Detalhes em <code>PENDENCIAS.md</code> e ' +
+        '<code>api/worker/README.md</code>.</p>' +
+      '</div>';
+    }
+    return '<div class="card">' +
+      '<h2>Infraestrutura no ar</h2>' +
+      '<table class="data"><tbody>' +
+        linha('Worker', U.esc(infra.worker || '—')) +
+        linha('Banco D1', U.esc(infra.d1 || '—')) +
+        linha('Bucket R2', U.esc(infra.r2 || '—') + ' (privado)') +
+        (infra.desde ? linha('Publicado em', U.esc(infra.desde)) : '') +
+      '</tbody></table>' +
+      '<p class="muted small" style="margin:10px 0 0">Use <em>Testar conexão</em> para conferir a versão ' +
+      'publicada da API e se o banco e o bucket estão ligados. Detalhes em <code>PENDENCIAS.md</code>.</p>' +
+    '</div>';
+  }
 
   function linha(k, v) {
     return '<tr><td>' + U.esc(k) + '</td><td class="num muted small">' + v + '</td></tr>';

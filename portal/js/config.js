@@ -20,6 +20,14 @@
     r2PublicUrl: '',         // bucket privado: os arquivos são servidos pelo Worker
     syncEnabled: false,      // ligue em Configurações após autenticar
 
+    /* ---- recursos provisionados (exibidos em Configurações) ---- */
+    infra: {
+      worker: 'portal-tcc-api',
+      d1: 'portal-tcc',
+      r2: 'portal-tcc-arquivos',
+      desde: '19/09/2026'
+    },
+
     /* ---- comportamento ---- */
     autosaveMs: 900,
     historyLimit: 40,

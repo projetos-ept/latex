@@ -65,7 +65,16 @@
 
   /* ---------------------------------------------------------------- rotas -- */
 
-  A.health = function () { return A.get('/api/health'); };
+  A.lastHealth = null;
+  A.lastCheckAt = null;
+
+  A.health = function () {
+    return A.get('/api/health').then(function (dados) {
+      A.lastHealth = dados;
+      A.lastCheckAt = U.now();
+      return dados;
+    });
+  };
 
   A.login = function (senha) {
     return A.post('/api/auth/login', { senha: senha }).then(function (data) {
