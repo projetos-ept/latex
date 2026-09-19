@@ -31,7 +31,7 @@
 
 // Carimbo da versão publicada. AUMENTE a cada alteração neste arquivo: é o que
 // permite confirmar, por GET /api/health, se o deploy trouxe o código novo.
-const BUILD = '2026-09-19.3';
+const BUILD = '2026-09-19.4';
 
 const TOKEN_TTL = 60 * 60 * 12;      // validade do token de sessão
 const LOGIN_JANELA_MIN = 15;         // janela de contagem de tentativas
@@ -355,12 +355,23 @@ async function listarReferencias(env) {
   });
 }
 
+/**
+ * references_tcc.user_id aponta para users(id). A linha do administrador vem da
+ * migração de seed, que é opcional — garanti-la aqui evita que a gravação falhe
+ * por chave estrangeira em um banco criado só com o esquema.
+ */
+function garantirAdmin(db) {
+  return db.prepare(
+    `INSERT OR IGNORE INTO users (id, nome, papel) VALUES ('usr_admin', 'Administrador', 'admin')`
+  );
+}
+
 async function salvarReferencia(request, env, id) {
   const db = exigirDb(env);
   const ref = await lerJson(request);
   if (!ref || !ref.tipo) throw httpError(400, 'referência inválida');
   const agora = ref.updatedAt || new Date().toISOString();
-  await db.prepare(
+  const gravar = db.prepare(
     `INSERT INTO references_tcc
        (id, user_id, tipo, chave, campos, tags, colecao, notas, favorito, created_at, updated_at)
      VALUES (?1,'usr_admin',?2,?3,?4,?5,?6,?7,?8,?9,?10)
@@ -371,7 +382,8 @@ async function salvarReferencia(request, env, id) {
     id, ref.tipo, ref.chave || id, JSON.stringify(ref.campos || {}),
     JSON.stringify(ref.tags || []), ref.colecao || '', ref.notas || '',
     ref.favorito ? 1 : 0, ref.createdAt || agora, agora
-  ).run();
+  );
+  await db.batch([garantirAdmin(db), gravar]);
   return respostaJson({ ok: true, id });
 }
 

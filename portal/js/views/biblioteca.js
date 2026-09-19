@@ -329,8 +329,11 @@
         editarDialog(ref, recarrega);
       });
 
-      U.on(root, 'click', '[data-ref]', function (ev, el) {
-        var ref = S.reference(el.closest('[data-ref]').getAttribute('data-ref'));
+      // A delegação precisa mirar o botão: apontar para [data-ref] devolvia a
+      // linha inteira, sem data-act, e nenhuma ação da lista era executada.
+      U.on(root, 'click', '.ref-item [data-act]', function (ev, el) {
+        var linha = el.closest('[data-ref]');
+        var ref = linha && S.reference(linha.getAttribute('data-ref'));
         var act = el.getAttribute('data-act');
         if (!ref || !act) return;
         if (act === 'copy-abnt') U.copy(P.ABNT.formatPlain(ref), 'Referência ABNT');
