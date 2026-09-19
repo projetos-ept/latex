@@ -199,7 +199,14 @@
       btn.disabled = true;
       btn.textContent = 'Sincronizando…';
       P.Api.sync().then(function (r) {
-        U.toast('Sync: ' + r.enviados + ' enviados, ' + r.baixados + ' baixados', 'ok');
+        // O resumo precisa cobrir também a biblioteca: contar só trabalhos fazia
+        // uma sincronização de referências aparecer como "0 enviados".
+        var partes = [];
+        if (r.enviados) partes.push(r.enviados + ' ' + U.plural(r.enviados, 'trabalho') + ' enviado' + (r.enviados > 1 ? 's' : ''));
+        if (r.baixados) partes.push(r.baixados + ' ' + U.plural(r.baixados, 'trabalho') + ' baixado' + (r.baixados > 1 ? 's' : ''));
+        if (r.refsEnviadas) partes.push(r.refsEnviadas + ' ' + U.plural(r.refsEnviadas, 'referência', 'referências') + ' enviada' + (r.refsEnviadas > 1 ? 's' : ''));
+        if (r.refsBaixadas) partes.push(r.refsBaixadas + ' ' + U.plural(r.refsBaixadas, 'referência', 'referências') + ' baixada' + (r.refsBaixadas > 1 ? 's' : ''));
+        U.toast(partes.length ? 'Sincronizado: ' + partes.join(', ') : 'Tudo já estava sincronizado', 'ok');
         App.refresh();
       }, function (err) {
         U.toast(err.message, 'err');
