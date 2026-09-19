@@ -1,0 +1,453 @@
+{
+  "norma": "ABNT NBR 14724:2011",
+  "descricao": "Estruturas de trabalho aplicadas pelo portal ao criar um projeto (fonte: portal/js/templates.js).",
+  "niveis": {
+    "graduacao": {
+      "label": "Graduação (TCC / Monografia)",
+      "tipoTrabalho": "Trabalho de Conclusão de Curso",
+      "blocos": [
+        {
+          "titulo": "Dedicatória",
+          "tipo": "pretextual",
+          "nivel": 1,
+          "arquivo": "dedicatoria",
+          "obrigatorio": false,
+          "incluir": false,
+          "dica": "Elemento opcional. Uma ou duas frases de homenagem, alinhadas à direita na parte inferior da página."
+        },
+        {
+          "titulo": "Agradecimentos",
+          "tipo": "pretextual",
+          "nivel": 1,
+          "arquivo": "agradecimentos",
+          "obrigatorio": false,
+          "incluir": true,
+          "dica": "Elemento opcional. Agradeça a quem contribuiu com a pesquisa: orientador, banca, instituição, agências de fomento (obrigatório citar bolsa/financiamento), família."
+        },
+        {
+          "titulo": "Epígrafe",
+          "tipo": "pretextual",
+          "nivel": 1,
+          "arquivo": "epigrafe",
+          "obrigatorio": false,
+          "incluir": false,
+          "dica": "Elemento opcional. Citação curta relacionada ao tema, com indicação de autoria."
+        },
+        {
+          "titulo": "Introdução",
+          "tipo": "capitulo",
+          "nivel": 1,
+          "arquivo": "introducao",
+          "obrigatorio": true,
+          "incluir": true,
+          "dica": "Apresente o tema, o problema, os objetivos, a justificativa e a organização do trabalho. Escreva a introdução por último, quando o restante já estiver pronto."
+        },
+        {
+          "titulo": "Fundamentação Teórica",
+          "tipo": "capitulo",
+          "nivel": 1,
+          "arquivo": "fundamentacao",
+          "obrigatorio": true,
+          "incluir": true,
+          "dica": "Revisão da literatura que sustenta a pesquisa. Organize por conceitos, não por autores. Toda afirmação precisa de citação: use [@chave] ou [@@chave]."
+        },
+        {
+          "titulo": "Metodologia",
+          "tipo": "capitulo",
+          "nivel": 1,
+          "arquivo": "metodologia",
+          "obrigatorio": true,
+          "incluir": true,
+          "dica": "Descreva COMO a pesquisa foi feita, com detalhe suficiente para ser reproduzida. Use verbos no passado."
+        },
+        {
+          "titulo": "Resultados e Discussão",
+          "tipo": "capitulo",
+          "nivel": 1,
+          "arquivo": "resultados",
+          "obrigatorio": true,
+          "incluir": true,
+          "dica": "Apresente os dados (tabelas, quadros, figuras) e discuta-os confrontando com a fundamentação teórica."
+        },
+        {
+          "titulo": "Considerações Finais",
+          "tipo": "capitulo",
+          "nivel": 1,
+          "arquivo": "consideracoes",
+          "obrigatorio": true,
+          "incluir": true,
+          "dica": "Retome o problema e os objetivos, sintetize as contribuições, aponte limitações e sugira trabalhos futuros. Não introduza citações novas nem dados inéditos."
+        },
+        {
+          "titulo": "Instrumento de coleta de dados",
+          "tipo": "postextual",
+          "nivel": 1,
+          "arquivo": "apendices",
+          "obrigatorio": false,
+          "incluir": false,
+          "dica": "Apêndice = material elaborado pelo próprio autor (questionário, roteiro de entrevista, termo de consentimento). O rótulo \"APÊNDICE A\" é gerado automaticamente: escreva só o título."
+        },
+        {
+          "titulo": "Documento complementar",
+          "tipo": "postextual",
+          "nivel": 1,
+          "arquivo": "anexos",
+          "obrigatorio": false,
+          "incluir": false,
+          "dica": "Anexo = material NÃO elaborado pelo autor (parecer do comitê de ética, tabelas de terceiros, legislação). O rótulo \"ANEXO A\" é gerado automaticamente."
+        }
+      ]
+    },
+    "especializacao": {
+      "label": "Pós-graduação lato sensu (Especialização)",
+      "tipoTrabalho": "Monografia de Especialização",
+      "blocos": [
+        {
+          "titulo": "Dedicatória",
+          "tipo": "pretextual",
+          "nivel": 1,
+          "arquivo": "dedicatoria",
+          "obrigatorio": false,
+          "incluir": false,
+          "dica": "Elemento opcional. Uma ou duas frases de homenagem, alinhadas à direita na parte inferior da página."
+        },
+        {
+          "titulo": "Agradecimentos",
+          "tipo": "pretextual",
+          "nivel": 1,
+          "arquivo": "agradecimentos",
+          "obrigatorio": false,
+          "incluir": true,
+          "dica": "Elemento opcional. Agradeça a quem contribuiu com a pesquisa: orientador, banca, instituição, agências de fomento (obrigatório citar bolsa/financiamento), família."
+        },
+        {
+          "titulo": "Epígrafe",
+          "tipo": "pretextual",
+          "nivel": 1,
+          "arquivo": "epigrafe",
+          "obrigatorio": false,
+          "incluir": false,
+          "dica": "Elemento opcional. Citação curta relacionada ao tema, com indicação de autoria."
+        },
+        {
+          "titulo": "Introdução",
+          "tipo": "capitulo",
+          "nivel": 1,
+          "arquivo": "introducao",
+          "obrigatorio": true,
+          "incluir": true,
+          "dica": "Apresente o tema, o problema, os objetivos, a justificativa e a organização do trabalho. Escreva a introdução por último, quando o restante já estiver pronto."
+        },
+        {
+          "titulo": "Referencial Teórico",
+          "tipo": "capitulo",
+          "nivel": 1,
+          "arquivo": "referencial",
+          "obrigatorio": true,
+          "incluir": true,
+          "dica": "Na especialização o referencial costuma ser mais aplicado: privilegie literatura recente e documentos técnicos da área."
+        },
+        {
+          "titulo": "Percurso Metodológico",
+          "tipo": "capitulo",
+          "nivel": 1,
+          "arquivo": "metodologia",
+          "obrigatorio": true,
+          "incluir": true,
+          "dica": "Descreva o desenho do estudo, o campo, os sujeitos, os instrumentos e a análise."
+        },
+        {
+          "titulo": "Resultados e Discussão",
+          "tipo": "capitulo",
+          "nivel": 1,
+          "arquivo": "resultados",
+          "obrigatorio": true,
+          "incluir": true,
+          "dica": "Relacione os achados com a prática profissional da área."
+        },
+        {
+          "titulo": "Considerações Finais",
+          "tipo": "capitulo",
+          "nivel": 1,
+          "arquivo": "consideracoes",
+          "obrigatorio": true,
+          "incluir": true,
+          "dica": "Destaque as implicações práticas do estudo para o campo de atuação."
+        },
+        {
+          "titulo": "Produto Técnico-Tecnológico",
+          "tipo": "capitulo",
+          "nivel": 1,
+          "arquivo": "produto",
+          "obrigatorio": false,
+          "incluir": false,
+          "dica": "Alguns cursos lato sensu exigem um produto (cartilha, protocolo, curso). Descreva-o aqui."
+        },
+        {
+          "titulo": "Instrumento de coleta de dados",
+          "tipo": "postextual",
+          "nivel": 1,
+          "arquivo": "apendices",
+          "obrigatorio": false,
+          "incluir": false,
+          "dica": "Apêndice = material elaborado pelo próprio autor (questionário, roteiro de entrevista, termo de consentimento). O rótulo \"APÊNDICE A\" é gerado automaticamente: escreva só o título."
+        },
+        {
+          "titulo": "Documento complementar",
+          "tipo": "postextual",
+          "nivel": 1,
+          "arquivo": "anexos",
+          "obrigatorio": false,
+          "incluir": false,
+          "dica": "Anexo = material NÃO elaborado pelo autor (parecer do comitê de ética, tabelas de terceiros, legislação). O rótulo \"ANEXO A\" é gerado automaticamente."
+        }
+      ]
+    },
+    "mestrado": {
+      "label": "Pós-graduação stricto sensu (Mestrado)",
+      "tipoTrabalho": "Dissertação de Mestrado",
+      "blocos": [
+        {
+          "titulo": "Dedicatória",
+          "tipo": "pretextual",
+          "nivel": 1,
+          "arquivo": "dedicatoria",
+          "obrigatorio": false,
+          "incluir": false,
+          "dica": "Elemento opcional. Uma ou duas frases de homenagem, alinhadas à direita na parte inferior da página."
+        },
+        {
+          "titulo": "Agradecimentos",
+          "tipo": "pretextual",
+          "nivel": 1,
+          "arquivo": "agradecimentos",
+          "obrigatorio": false,
+          "incluir": true,
+          "dica": "Elemento opcional. Agradeça a quem contribuiu com a pesquisa: orientador, banca, instituição, agências de fomento (obrigatório citar bolsa/financiamento), família."
+        },
+        {
+          "titulo": "Epígrafe",
+          "tipo": "pretextual",
+          "nivel": 1,
+          "arquivo": "epigrafe",
+          "obrigatorio": false,
+          "incluir": false,
+          "dica": "Elemento opcional. Citação curta relacionada ao tema, com indicação de autoria."
+        },
+        {
+          "titulo": "Introdução",
+          "tipo": "capitulo",
+          "nivel": 1,
+          "arquivo": "introducao",
+          "obrigatorio": true,
+          "incluir": true,
+          "dica": "Apresente o tema, o problema, os objetivos, a justificativa e a organização do trabalho. Escreva a introdução por último, quando o restante já estiver pronto."
+        },
+        {
+          "titulo": "Revisão da Literatura",
+          "tipo": "capitulo",
+          "nivel": 1,
+          "arquivo": "revisao",
+          "obrigatorio": true,
+          "incluir": true,
+          "dica": "Mapeie o estado da arte. Explicite as bases consultadas, o período e os critérios de inclusão/exclusão quando a revisão for sistemática ou integrativa."
+        },
+        {
+          "titulo": "Fundamentação Teórica",
+          "tipo": "capitulo",
+          "nivel": 1,
+          "arquivo": "fundamentacao",
+          "obrigatorio": true,
+          "incluir": true,
+          "dica": "Aprofunde o arcabouço conceitual e os modelos teóricos que sustentam as hipóteses."
+        },
+        {
+          "titulo": "Materiais e Métodos",
+          "tipo": "capitulo",
+          "nivel": 1,
+          "arquivo": "metodologia",
+          "obrigatorio": true,
+          "incluir": true,
+          "dica": "Detalhe delineamento, amostragem, variáveis, instrumentos, protocolos, softwares e testes estatísticos (com nível de significância)."
+        },
+        {
+          "titulo": "Resultados",
+          "tipo": "capitulo",
+          "nivel": 1,
+          "arquivo": "resultados",
+          "obrigatorio": true,
+          "incluir": true,
+          "dica": "Apenas os achados, sem interpretação. Cada tabela e figura deve ser chamada no texto."
+        },
+        {
+          "titulo": "Discussão",
+          "tipo": "capitulo",
+          "nivel": 1,
+          "arquivo": "discussao",
+          "obrigatorio": true,
+          "incluir": true,
+          "dica": "Interprete os resultados frente à literatura, aponte mecanismos explicativos e limitações metodológicas."
+        },
+        {
+          "titulo": "Conclusões",
+          "tipo": "capitulo",
+          "nivel": 1,
+          "arquivo": "conclusoes",
+          "obrigatorio": true,
+          "incluir": true,
+          "dica": "Conclusões diretas e ancoradas nos objetivos, seguidas de perspectivas futuras."
+        },
+        {
+          "titulo": "Instrumento de coleta de dados",
+          "tipo": "postextual",
+          "nivel": 1,
+          "arquivo": "apendices",
+          "obrigatorio": false,
+          "incluir": false,
+          "dica": "Apêndice = material elaborado pelo próprio autor (questionário, roteiro de entrevista, termo de consentimento). O rótulo \"APÊNDICE A\" é gerado automaticamente: escreva só o título."
+        },
+        {
+          "titulo": "Documento complementar",
+          "tipo": "postextual",
+          "nivel": 1,
+          "arquivo": "anexos",
+          "obrigatorio": false,
+          "incluir": false,
+          "dica": "Anexo = material NÃO elaborado pelo autor (parecer do comitê de ética, tabelas de terceiros, legislação). O rótulo \"ANEXO A\" é gerado automaticamente."
+        }
+      ]
+    },
+    "doutorado": {
+      "label": "Pós-graduação stricto sensu (Doutorado)",
+      "tipoTrabalho": "Tese de Doutorado",
+      "blocos": [
+        {
+          "titulo": "Dedicatória",
+          "tipo": "pretextual",
+          "nivel": 1,
+          "arquivo": "dedicatoria",
+          "obrigatorio": false,
+          "incluir": false,
+          "dica": "Elemento opcional. Uma ou duas frases de homenagem, alinhadas à direita na parte inferior da página."
+        },
+        {
+          "titulo": "Agradecimentos",
+          "tipo": "pretextual",
+          "nivel": 1,
+          "arquivo": "agradecimentos",
+          "obrigatorio": false,
+          "incluir": true,
+          "dica": "Elemento opcional. Agradeça a quem contribuiu com a pesquisa: orientador, banca, instituição, agências de fomento (obrigatório citar bolsa/financiamento), família."
+        },
+        {
+          "titulo": "Epígrafe",
+          "tipo": "pretextual",
+          "nivel": 1,
+          "arquivo": "epigrafe",
+          "obrigatorio": false,
+          "incluir": false,
+          "dica": "Elemento opcional. Citação curta relacionada ao tema, com indicação de autoria."
+        },
+        {
+          "titulo": "Introdução",
+          "tipo": "capitulo",
+          "nivel": 1,
+          "arquivo": "introducao",
+          "obrigatorio": true,
+          "incluir": true,
+          "dica": "Apresente o tema, o problema, os objetivos, a justificativa e a organização do trabalho. Escreva a introdução por último, quando o restante já estiver pronto."
+        },
+        {
+          "titulo": "Revisão da Literatura",
+          "tipo": "capitulo",
+          "nivel": 1,
+          "arquivo": "revisao",
+          "obrigatorio": true,
+          "incluir": true,
+          "dica": "Revisão ampla e crítica, capaz de sustentar o ineditismo da tese."
+        },
+        {
+          "titulo": "Fundamentação Teórica",
+          "tipo": "capitulo",
+          "nivel": 1,
+          "arquivo": "fundamentacao",
+          "obrigatorio": true,
+          "incluir": true,
+          "dica": "Construa o referencial que fundamenta as hipóteses e o modelo proposto."
+        },
+        {
+          "titulo": "Hipóteses e Proposta",
+          "tipo": "capitulo",
+          "nivel": 1,
+          "arquivo": "proposta",
+          "obrigatorio": true,
+          "incluir": true,
+          "dica": "Elemento central da tese: enuncie hipóteses e a contribuição original ao conhecimento."
+        },
+        {
+          "titulo": "Materiais e Métodos",
+          "tipo": "capitulo",
+          "nivel": 1,
+          "arquivo": "metodologia",
+          "obrigatorio": true,
+          "incluir": true,
+          "dica": "Descreva cada estudo/experimento da tese, mantendo rastreabilidade entre objetivos e métodos."
+        },
+        {
+          "titulo": "Resultados",
+          "tipo": "capitulo",
+          "nivel": 1,
+          "arquivo": "resultados",
+          "obrigatorio": true,
+          "incluir": true,
+          "dica": "Organize os resultados por estudo ou por objetivo específico."
+        },
+        {
+          "titulo": "Discussão Geral",
+          "tipo": "capitulo",
+          "nivel": 1,
+          "arquivo": "discussao",
+          "obrigatorio": true,
+          "incluir": true,
+          "dica": "Integre os achados dos diferentes estudos em uma discussão única."
+        },
+        {
+          "titulo": "Conclusões e Perspectivas",
+          "tipo": "capitulo",
+          "nivel": 1,
+          "arquivo": "conclusoes",
+          "obrigatorio": true,
+          "incluir": true,
+          "dica": "Conclua, evidencie a contribuição original e aponte desdobramentos."
+        },
+        {
+          "titulo": "Produção científica do período",
+          "tipo": "postextual",
+          "nivel": 1,
+          "arquivo": "producao",
+          "obrigatorio": false,
+          "incluir": false,
+          "dica": "Liste artigos, capítulos, patentes e eventos derivados da tese."
+        },
+        {
+          "titulo": "Instrumento de coleta de dados",
+          "tipo": "postextual",
+          "nivel": 1,
+          "arquivo": "apendices",
+          "obrigatorio": false,
+          "incluir": false,
+          "dica": "Apêndice = material elaborado pelo próprio autor (questionário, roteiro de entrevista, termo de consentimento). O rótulo \"APÊNDICE A\" é gerado automaticamente: escreva só o título."
+        },
+        {
+          "titulo": "Documento complementar",
+          "tipo": "postextual",
+          "nivel": 1,
+          "arquivo": "anexos",
+          "obrigatorio": false,
+          "incluir": false,
+          "dica": "Anexo = material NÃO elaborado pelo autor (parecer do comitê de ética, tabelas de terceiros, legislação). O rótulo \"ANEXO A\" é gerado automaticamente."
+        }
+      ]
+    }
+  }
+}

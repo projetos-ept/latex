@@ -1,0 +1,662 @@
+{
+  "descricao": "Biblioteca de exemplo do Portal TCC ABNT no formato interno (mesmo conteúdo de referencias-exemplo.bib).",
+  "geradoEm": "2026-09-19",
+  "referencias": [
+    {
+      "id": "ref_mu8b7li7tw6wrx",
+      "tipo": "livro",
+      "chave": "gil2022",
+      "campos": {
+        "autores": [
+          {
+            "sobrenome": "Gil",
+            "nomes": "Antonio Carlos",
+            "bruto": "Gil, Antonio Carlos"
+          }
+        ],
+        "titulo": "Como elaborar projetos de pesquisa",
+        "subtitulo": "",
+        "ano": "2022",
+        "local": "São Paulo",
+        "editora": "Atlas",
+        "edicao": "7",
+        "volume": "",
+        "numero": "",
+        "paginas": "192",
+        "periodico": "",
+        "curso": "",
+        "totalPaginas": "192",
+        "serie": "",
+        "isbn": "9788597026559",
+        "issn": "",
+        "doi": "",
+        "url": "",
+        "acesso": "",
+        "nomeSite": "",
+        "instituicao": "",
+        "jurisdicao": "",
+        "tipoNorma": "",
+        "data": "",
+        "ementa": "",
+        "publicacao": "",
+        "codigo": "",
+        "tituloObra": "",
+        "organizadores": [],
+        "nomeEvento": "",
+        "tituloAnais": "",
+        "grau": "",
+        "nivel": "",
+        "plataforma": "",
+        "notas": ""
+      },
+      "tags": [
+        "importado"
+      ],
+      "colecao": "",
+      "notas": "",
+      "favorito": false,
+      "createdAt": "2026-09-19T11:33:59.839Z",
+      "updatedAt": "2026-09-19T11:33:59.839Z"
+    },
+    {
+      "id": "ref_mu8b7li8az6c32",
+      "tipo": "livro",
+      "chave": "lakatos2021",
+      "campos": {
+        "autores": [
+          {
+            "sobrenome": "Marconi",
+            "nomes": "Marina de Andrade",
+            "bruto": "Marconi, Marina de Andrade"
+          },
+          {
+            "sobrenome": "Lakatos",
+            "nomes": "Eva Maria",
+            "bruto": "Lakatos, Eva Maria"
+          }
+        ],
+        "titulo": "Fundamentos de metodologia científica",
+        "subtitulo": "",
+        "ano": "2021",
+        "local": "São Paulo",
+        "editora": "Atlas",
+        "edicao": "9",
+        "volume": "",
+        "numero": "",
+        "paginas": "",
+        "periodico": "",
+        "curso": "",
+        "totalPaginas": "",
+        "serie": "",
+        "isbn": "",
+        "issn": "",
+        "doi": "",
+        "url": "",
+        "acesso": "",
+        "nomeSite": "",
+        "instituicao": "",
+        "jurisdicao": "",
+        "tipoNorma": "",
+        "data": "",
+        "ementa": "",
+        "publicacao": "",
+        "codigo": "",
+        "tituloObra": "",
+        "organizadores": [],
+        "nomeEvento": "",
+        "tituloAnais": "",
+        "grau": "",
+        "nivel": "",
+        "plataforma": "",
+        "notas": ""
+      },
+      "tags": [
+        "importado"
+      ],
+      "colecao": "",
+      "notas": "",
+      "favorito": false,
+      "createdAt": "2026-09-19T11:33:59.840Z",
+      "updatedAt": "2026-09-19T11:33:59.840Z"
+    },
+    {
+      "id": "ref_mu8b7li88sbw48",
+      "tipo": "artigo",
+      "chave": "silva2024",
+      "campos": {
+        "autores": [
+          {
+            "sobrenome": "Silva",
+            "nomes": "Maria Clara",
+            "bruto": "Silva, Maria Clara"
+          },
+          {
+            "sobrenome": "Souza",
+            "nomes": "João Pedro",
+            "bruto": "Souza, João Pedro"
+          },
+          {
+            "sobrenome": "Lima",
+            "nomes": "Ana Beatriz",
+            "bruto": "Lima, Ana Beatriz"
+          },
+          {
+            "sobrenome": "Costa",
+            "nomes": "Rui",
+            "bruto": "Costa, Rui"
+          }
+        ],
+        "titulo": "Teleconsulta e acesso à atenção primária",
+        "subtitulo": "revisão integrativa",
+        "ano": "2024",
+        "local": "Rio de Janeiro",
+        "editora": "",
+        "edicao": "",
+        "volume": "29",
+        "numero": "4",
+        "paginas": "1145-1160",
+        "periodico": "Revista Brasileira de Saúde Coletiva",
+        "curso": "",
+        "totalPaginas": "",
+        "serie": "",
+        "isbn": "",
+        "issn": "1413-8123",
+        "doi": "10.1590/exemplo.2024.294",
+        "url": "",
+        "acesso": "",
+        "nomeSite": "",
+        "instituicao": "",
+        "jurisdicao": "",
+        "tipoNorma": "",
+        "data": "",
+        "ementa": "",
+        "publicacao": "",
+        "codigo": "",
+        "tituloObra": "",
+        "organizadores": [],
+        "nomeEvento": "",
+        "tituloAnais": "",
+        "grau": "",
+        "nivel": "",
+        "plataforma": "",
+        "notas": ""
+      },
+      "tags": [
+        "importado"
+      ],
+      "colecao": "",
+      "notas": "",
+      "favorito": false,
+      "createdAt": "2026-09-19T11:33:59.840Z",
+      "updatedAt": "2026-09-19T11:33:59.840Z"
+    },
+    {
+      "id": "ref_mu8b7li8f41j2a",
+      "tipo": "capitulo",
+      "chave": "ferreira2020",
+      "campos": {
+        "autores": [
+          {
+            "sobrenome": "Ferreira",
+            "nomes": "Paulo Henrique",
+            "bruto": "Ferreira, Paulo Henrique"
+          }
+        ],
+        "titulo": "Análise de conteúdo na pesquisa qualitativa",
+        "subtitulo": "",
+        "ano": "2020",
+        "local": "Belo Horizonte",
+        "editora": "Editora UFMG",
+        "edicao": "2",
+        "volume": "",
+        "numero": "",
+        "paginas": "101-128",
+        "periodico": "",
+        "curso": "",
+        "totalPaginas": "",
+        "serie": "",
+        "isbn": "",
+        "issn": "",
+        "doi": "",
+        "url": "",
+        "acesso": "",
+        "nomeSite": "",
+        "instituicao": "",
+        "jurisdicao": "",
+        "tipoNorma": "",
+        "data": "",
+        "ementa": "",
+        "publicacao": "",
+        "codigo": "",
+        "tituloObra": "Métodos qualitativos em ciências da saúde",
+        "organizadores": [
+          {
+            "sobrenome": "Almeida",
+            "nomes": "Regina",
+            "bruto": "Almeida, Regina"
+          },
+          {
+            "sobrenome": "Barbosa",
+            "nomes": "Lúcia",
+            "bruto": "Barbosa, Lúcia"
+          }
+        ],
+        "nomeEvento": "",
+        "tituloAnais": "",
+        "grau": "",
+        "nivel": "",
+        "plataforma": "",
+        "notas": ""
+      },
+      "tags": [
+        "importado"
+      ],
+      "colecao": "",
+      "notas": "",
+      "favorito": false,
+      "createdAt": "2026-09-19T11:33:59.840Z",
+      "updatedAt": "2026-09-19T11:33:59.840Z"
+    },
+    {
+      "id": "ref_mu8b7li83uqwgz",
+      "tipo": "evento",
+      "chave": "oliveira2023",
+      "campos": {
+        "autores": [
+          {
+            "sobrenome": "Oliveira",
+            "nomes": "Carla Regina",
+            "bruto": "Oliveira, Carla Regina"
+          },
+          {
+            "sobrenome": "Martins",
+            "nomes": "Diego",
+            "bruto": "Martins, Diego"
+          }
+        ],
+        "titulo": "Indicadores de desempenho em unidades básicas de saúde",
+        "subtitulo": "",
+        "ano": "2023",
+        "local": "Salvador",
+        "editora": "ABRASCO",
+        "edicao": "",
+        "volume": "",
+        "numero": "",
+        "paginas": "318-327",
+        "periodico": "",
+        "curso": "",
+        "totalPaginas": "",
+        "serie": "",
+        "isbn": "",
+        "issn": "",
+        "doi": "",
+        "url": "",
+        "acesso": "",
+        "nomeSite": "",
+        "instituicao": "",
+        "jurisdicao": "",
+        "tipoNorma": "",
+        "data": "",
+        "ementa": "",
+        "publicacao": "",
+        "codigo": "",
+        "tituloObra": "",
+        "organizadores": [],
+        "nomeEvento": "15. Congresso Brasileiro de Saúde Coletiva",
+        "tituloAnais": "Anais [...]",
+        "grau": "",
+        "nivel": "",
+        "plataforma": "ABRASCO",
+        "notas": ""
+      },
+      "tags": [
+        "importado"
+      ],
+      "colecao": "",
+      "notas": "",
+      "favorito": false,
+      "createdAt": "2026-09-19T11:33:59.840Z",
+      "updatedAt": "2026-09-19T11:33:59.840Z"
+    },
+    {
+      "id": "ref_mu8b7li8z7xdh1",
+      "tipo": "trabalho",
+      "chave": "pereira2022",
+      "campos": {
+        "autores": [
+          {
+            "sobrenome": "Pereira",
+            "nomes": "Luana Martins",
+            "bruto": "Pereira, Luana Martins"
+          }
+        ],
+        "titulo": "Adesão ao tratamento em pacientes hipertensos",
+        "subtitulo": "",
+        "ano": "2022",
+        "local": "Recife",
+        "editora": "",
+        "edicao": "",
+        "volume": "",
+        "numero": "",
+        "paginas": "118",
+        "periodico": "",
+        "curso": "Enfermagem",
+        "totalPaginas": "118",
+        "serie": "",
+        "isbn": "",
+        "issn": "",
+        "doi": "",
+        "url": "",
+        "acesso": "",
+        "nomeSite": "",
+        "instituicao": "Universidade Federal de Pernambuco",
+        "jurisdicao": "",
+        "tipoNorma": "",
+        "data": "",
+        "ementa": "",
+        "publicacao": "",
+        "codigo": "",
+        "tituloObra": "",
+        "organizadores": [],
+        "nomeEvento": "",
+        "tituloAnais": "",
+        "grau": "Dissertação",
+        "nivel": "Mestrado",
+        "plataforma": "",
+        "notas": ""
+      },
+      "tags": [
+        "importado"
+      ],
+      "colecao": "",
+      "notas": "",
+      "favorito": false,
+      "createdAt": "2026-09-19T11:33:59.840Z",
+      "updatedAt": "2026-09-19T11:33:59.840Z"
+    },
+    {
+      "id": "ref_mu8b7li8ltq1eq",
+      "tipo": "trabalho",
+      "chave": "ribeiro2021",
+      "campos": {
+        "autores": [
+          {
+            "sobrenome": "Ribeiro",
+            "nomes": "Fernando Augusto",
+            "bruto": "Ribeiro, Fernando Augusto"
+          }
+        ],
+        "titulo": "Modelos preditivos aplicados à gestão hospitalar",
+        "subtitulo": "",
+        "ano": "2021",
+        "local": "São Carlos",
+        "editora": "",
+        "edicao": "",
+        "volume": "",
+        "numero": "",
+        "paginas": "206",
+        "periodico": "",
+        "curso": "Engenharia de Produção",
+        "totalPaginas": "206",
+        "serie": "",
+        "isbn": "",
+        "issn": "",
+        "doi": "",
+        "url": "",
+        "acesso": "",
+        "nomeSite": "",
+        "instituicao": "Universidade de São Paulo",
+        "jurisdicao": "",
+        "tipoNorma": "",
+        "data": "",
+        "ementa": "",
+        "publicacao": "",
+        "codigo": "",
+        "tituloObra": "",
+        "organizadores": [],
+        "nomeEvento": "",
+        "tituloAnais": "",
+        "grau": "Tese",
+        "nivel": "Doutorado",
+        "plataforma": "",
+        "notas": ""
+      },
+      "tags": [
+        "importado"
+      ],
+      "colecao": "",
+      "notas": "",
+      "favorito": false,
+      "createdAt": "2026-09-19T11:33:59.840Z",
+      "updatedAt": "2026-09-19T11:33:59.840Z"
+    },
+    {
+      "id": "ref_mu8b7li85x27p3",
+      "tipo": "norma",
+      "chave": "abnt2011",
+      "campos": {
+        "autores": [
+          {
+            "sobrenome": "Associação Brasileira de Normas Técnicas",
+            "nomes": "",
+            "bruto": "Associação Brasileira de Normas Técnicas",
+            "instituicao": true
+          }
+        ],
+        "titulo": "informação e documentação: trabalhos acadêmicos: apresentação",
+        "subtitulo": "",
+        "ano": "2011",
+        "local": "Rio de Janeiro",
+        "editora": "Associação Brasileira de Normas Técnicas",
+        "edicao": "",
+        "volume": "",
+        "numero": "",
+        "paginas": "11",
+        "periodico": "",
+        "curso": "",
+        "totalPaginas": "11",
+        "serie": "",
+        "isbn": "",
+        "issn": "",
+        "doi": "",
+        "url": "",
+        "acesso": "",
+        "nomeSite": "",
+        "instituicao": "Associação Brasileira de Normas Técnicas",
+        "jurisdicao": "",
+        "tipoNorma": "",
+        "data": "",
+        "ementa": "",
+        "publicacao": "",
+        "codigo": "NBR 14724",
+        "tituloObra": "",
+        "organizadores": [],
+        "nomeEvento": "",
+        "tituloAnais": "",
+        "grau": "",
+        "nivel": "",
+        "plataforma": "Associação Brasileira de Normas Técnicas",
+        "notas": ""
+      },
+      "tags": [
+        "importado"
+      ],
+      "colecao": "",
+      "notas": "",
+      "favorito": false,
+      "createdAt": "2026-09-19T11:33:59.840Z",
+      "updatedAt": "2026-09-19T11:33:59.840Z"
+    },
+    {
+      "id": "ref_mu8b7li8uace9m",
+      "tipo": "norma",
+      "chave": "abnt2018",
+      "campos": {
+        "autores": [
+          {
+            "sobrenome": "Associação Brasileira de Normas Técnicas",
+            "nomes": "",
+            "bruto": "Associação Brasileira de Normas Técnicas",
+            "instituicao": true
+          }
+        ],
+        "titulo": "informação e documentação: referências: elaboração",
+        "subtitulo": "",
+        "ano": "2018",
+        "local": "Rio de Janeiro",
+        "editora": "Associação Brasileira de Normas Técnicas",
+        "edicao": "",
+        "volume": "",
+        "numero": "",
+        "paginas": "68",
+        "periodico": "",
+        "curso": "",
+        "totalPaginas": "68",
+        "serie": "",
+        "isbn": "",
+        "issn": "",
+        "doi": "",
+        "url": "",
+        "acesso": "",
+        "nomeSite": "",
+        "instituicao": "Associação Brasileira de Normas Técnicas",
+        "jurisdicao": "",
+        "tipoNorma": "",
+        "data": "",
+        "ementa": "",
+        "publicacao": "",
+        "codigo": "NBR 6023",
+        "tituloObra": "",
+        "organizadores": [],
+        "nomeEvento": "",
+        "tituloAnais": "",
+        "grau": "",
+        "nivel": "",
+        "plataforma": "Associação Brasileira de Normas Técnicas",
+        "notas": ""
+      },
+      "tags": [
+        "importado"
+      ],
+      "colecao": "",
+      "notas": "",
+      "favorito": false,
+      "createdAt": "2026-09-19T11:33:59.840Z",
+      "updatedAt": "2026-09-19T11:33:59.840Z"
+    },
+    {
+      "id": "ref_mu8b7li95j8ezv",
+      "tipo": "legislacao",
+      "chave": "brasil1996",
+      "campos": {
+        "autores": [
+          {
+            "sobrenome": "BRASIL",
+            "nomes": "",
+            "bruto": "BRASIL",
+            "instituicao": true
+          }
+        ],
+        "titulo": "Lei nº 9.394, de 20 de dezembro de 1996",
+        "subtitulo": "",
+        "ano": "1996",
+        "local": "Brasília, DF",
+        "editora": "",
+        "edicao": "",
+        "volume": "",
+        "numero": "9.394",
+        "paginas": "",
+        "periodico": "",
+        "curso": "",
+        "totalPaginas": "",
+        "serie": "",
+        "isbn": "",
+        "issn": "",
+        "doi": "",
+        "url": "https://www.planalto.gov.br/ccivil_03/leis/l9394.htm",
+        "acesso": "19 set. 2026",
+        "nomeSite": "",
+        "instituicao": "",
+        "jurisdicao": "BRASIL",
+        "tipoNorma": "Lei",
+        "data": "20 de dezembro de 1996",
+        "ementa": "Estabelece as diretrizes e bases da educação nacional",
+        "publicacao": "Diário Oficial da União",
+        "codigo": "",
+        "tituloObra": "",
+        "organizadores": [],
+        "nomeEvento": "",
+        "tituloAnais": "",
+        "grau": "",
+        "nivel": "",
+        "plataforma": "",
+        "notas": "Estabelece as diretrizes e bases da educação nacional"
+      },
+      "tags": [
+        "importado"
+      ],
+      "colecao": "",
+      "notas": "Estabelece as diretrizes e bases da educação nacional",
+      "favorito": false,
+      "createdAt": "2026-09-19T11:33:59.841Z",
+      "updatedAt": "2026-09-19T11:33:59.841Z"
+    },
+    {
+      "id": "ref_mu8b7li988g02v",
+      "tipo": "site",
+      "chave": "ms2025",
+      "campos": {
+        "autores": [
+          {
+            "sobrenome": "Ministério da Saúde",
+            "nomes": "",
+            "bruto": "Ministério da Saúde",
+            "instituicao": true
+          }
+        ],
+        "titulo": "Painel de indicadores da atenção primária",
+        "subtitulo": "",
+        "ano": "2025",
+        "local": "Brasília, DF",
+        "editora": "Ministério da Saúde",
+        "edicao": "",
+        "volume": "",
+        "numero": "",
+        "paginas": "",
+        "periodico": "",
+        "curso": "",
+        "totalPaginas": "",
+        "serie": "",
+        "isbn": "",
+        "issn": "",
+        "doi": "",
+        "url": "https://exemplo.gov.br/painel-aps",
+        "acesso": "19 set. 2026",
+        "nomeSite": "Ministério da Saúde",
+        "instituicao": "",
+        "jurisdicao": "",
+        "tipoNorma": "",
+        "data": "",
+        "ementa": "",
+        "publicacao": "",
+        "codigo": "",
+        "tituloObra": "",
+        "organizadores": [],
+        "nomeEvento": "",
+        "tituloAnais": "",
+        "grau": "",
+        "nivel": "",
+        "plataforma": "Ministério da Saúde",
+        "notas": ""
+      },
+      "tags": [
+        "importado"
+      ],
+      "colecao": "",
+      "notas": "",
+      "favorito": false,
+      "createdAt": "2026-09-19T11:33:59.841Z",
+      "updatedAt": "2026-09-19T11:33:59.841Z"
+    }
+  ]
+}

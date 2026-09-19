@@ -1,0 +1,30 @@
+# dependências
+node_modules/
+package-lock.json
+
+# cloudflare / wrangler
+.wrangler/
+.dev.vars
+.env
+
+# saídas LaTeX
+*.aux
+*.bbl
+*.blg
+*.log
+*.out
+*.toc
+*.lof
+*.lot
+*.synctex.gz
+*.fls
+*.fdb_latexmk
+*.idx
+*.ilg
+*.ind
+*.brf
+*.pdf
+
+# sistema
+.DS_Store
+Thumbs.db

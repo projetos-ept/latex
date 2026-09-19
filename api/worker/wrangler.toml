@@ -1,0 +1,37 @@
+# =============================================================================
+# Portal TCC ABNT — configuração do Cloudflare Worker
+# -----------------------------------------------------------------------------
+# PENDENTE: preencher database_id (D1) e confirmar bucket_name (R2).
+# Passo a passo em ../../PENDENCIAS.md
+# =============================================================================
+
+name = "portal-tcc-api"
+main = "src/index.js"
+compatibility_date = "2025-09-01"
+workers_dev = true
+
+# ---------------------------------------------------------------- variáveis --
+[vars]
+# Restrinja em produção, ex.: "https://usuario.github.io"
+ORIGENS_PERMITIDAS = "*"
+# Domínio público do bucket R2, se você configurar um. Vazio = servir via Worker.
+R2_PUBLIC_URL = ""
+
+# ------------------------------------------------------------------ banco D1 --
+# 1) wrangler d1 create portal-tcc
+# 2) copie o database_id retornado para a linha abaixo
+[[d1_databases]]
+binding = "DB"
+database_name = "portal-tcc"
+database_id = "PREENCHER-COM-O-ID-DO-D1"
+
+# ------------------------------------------------------------- armazenamento --
+# wrangler r2 bucket create portal-tcc-arquivos
+[[r2_buckets]]
+binding = "ARQUIVOS"
+bucket_name = "portal-tcc-arquivos"
+
+# --------------------------------------------------------------- observação ---
+# Segredos NÃO ficam neste arquivo. Defina com:
+#   wrangler secret put ADMIN_SENHA
+#   wrangler secret put TOKEN_SEGREDO
