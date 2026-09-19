@@ -112,6 +112,24 @@
     return A.get('/api/files' + (projectId ? '?projectId=' + encodeURIComponent(projectId) : ''));
   };
 
+  /** Baixa um arquivo do R2 pela rota autenticada, devolvendo um Blob. */
+  A.downloadFile = function (chave) {
+    if (!A.configured()) return Promise.reject(new Error('API não configurada.'));
+    var headers = {};
+    var token = U.trim((P.Store.settings() || {}).apiToken);
+    if (token) headers['Authorization'] = 'Bearer ' + token;
+    return fetch(url('/api/files/' + encodeURIComponent(chave)), { headers: headers })
+      .then(function (res) {
+        if (res.status === 401) throw new Error('sessão expirada: autentique-se em Configurações');
+        if (!res.ok) throw new Error('falha ao baixar o arquivo (HTTP ' + res.status + ')');
+        return res.blob();
+      });
+  };
+
+  A.deleteFile = function (chave) {
+    return A.del('/api/files/' + encodeURIComponent(chave));
+  };
+
   A.fileUrl = function (chave) {
     var pub = U.trim(cfg().r2PublicUrl);
     if (pub) return pub.replace(/\/+$/, '') + '/' + chave;

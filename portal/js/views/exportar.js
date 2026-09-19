@@ -106,10 +106,12 @@
           '</div>' +
 
           '<div class="card">' +
-            '<h2>Arquivos e anexos (R2)</h2>' +
+            '<h2>Arquivos e anexos</h2>' +
             (P.Api.configured()
-              ? '<p class="muted small">Envie PDFs (ficha catalográfica, folha de aprovação assinada) e imagens para o bucket R2.</p>' +
-                '<button class="btn btn-sm btn-block" data-act="upload">Enviar arquivo</button>'
+              ? '<p class="muted small">Ficha catalográfica, folha de aprovação assinada, imagens. ' +
+                'O bucket é privado: os arquivos só são acessíveis com a sua sessão.</p>' +
+                '<div id="listaArquivos"></div>' +
+                '<button class="btn btn-sm btn-block" data-act="upload" style="margin-top:10px">Enviar arquivo</button>'
               : '<p class="muted small">O envio de arquivos para o Cloudflare R2 fica disponível assim que a URL do Worker for informada em <a href="#/config">Configurações</a>. Enquanto isso, inclua as imagens direto na pasta <code>figuras/</code> do Overleaf.</p>') +
           '</div>' +
         '</div></div>';
@@ -141,11 +143,80 @@
             .then(function () { return P.Api.uploadFile(file, prj.id); })
             .then(function (r) {
               U.toast('Arquivo enviado: ' + (r.nome || file.name), 'ok');
+              carregarArquivos();
             }, function (err) { U.toast(err.message, 'err'); });
         }, false);
       });
+
+      U.on(root, 'click', '[data-baixar]', function (ev, el) {
+        var chave = el.getAttribute('data-baixar');
+        var nome = el.getAttribute('data-nome') || 'arquivo';
+        el.disabled = true;
+        P.Api.downloadFile(chave).then(function (blob) {
+          U.download(nome, blob);
+          el.disabled = false;
+        }, function (err) {
+          U.toast(err.message, 'err');
+          el.disabled = false;
+        });
+      });
+
+      U.on(root, 'click', '[data-excluir-arq]', function (ev, el) {
+        var chave = el.getAttribute('data-excluir-arq');
+        var nome = el.getAttribute('data-nome') || chave;
+        U.confirm('Excluir "' + nome + '" do armazenamento? Não há como desfazer.', function () {
+          P.Api.deleteFile(chave).then(function () {
+            U.toast('Arquivo excluído');
+            carregarArquivos();
+          }, function (err) { U.toast(err.message, 'err'); });
+        }, { okLabel: 'Excluir' });
+      });
+
+      /** Lista os arquivos do trabalho guardados no R2. */
+      function carregarArquivos() {
+        var host = U.qs('#listaArquivos', root);
+        if (!host) return;
+        // Sem sessão não há o que consultar: evita uma chamada que só voltaria 401.
+        if (!U.trim((S.settings() || {}).apiToken)) {
+          host.innerHTML = '<div class="muted small">Autentique-se em ' +
+            '<a href="#/config">Configurações</a> para enviar e consultar arquivos.</div>';
+          return;
+        }
+        host.innerHTML = '<div class="muted small">carregando…</div>';
+        P.Api.listFiles(prj.id).then(function (dados) {
+          var arquivos = (dados && dados.files) || [];
+          if (!arquivos.length) {
+            host.innerHTML = '<div class="muted small">Nenhum arquivo enviado para este trabalho.</div>';
+            return;
+          }
+          host.innerHTML = '<table class="data"><tbody>' + arquivos.map(function (f) {
+            return '<tr><td><div class="truncate" style="max-width:150px">' + U.esc(f.nome) + '</div>' +
+              '<div class="muted small">' + fmtBytes(f.tamanho) + ' · ' + U.fmtDate(f.created_at) + '</div></td>' +
+              '<td class="actions nowrap">' +
+                '<button class="btn btn-sm" data-baixar="' + U.esc(f.chave) + '" data-nome="' + U.esc(f.nome) + '">baixar</button> ' +
+                '<button class="btn btn-sm btn-ghost btn-danger" data-excluir-arq="' + U.esc(f.chave) + '" data-nome="' + U.esc(f.nome) + '" title="Excluir">' + U.icon('trash') + '</button>' +
+              '</td></tr>';
+          }).join('') + '</tbody></table>';
+        }, function (err) {
+          var expirou = /401|sessão|token/i.test(err.message);
+          host.innerHTML = '<div class="muted small">' +
+            (expirou
+              ? 'Autentique-se em <a href="#/config">Configurações</a> para ver os arquivos enviados.'
+              : U.esc(err.message)) +
+            '</div>';
+        });
+      }
+
+      if (P.Api.configured()) carregarArquivos();
     }
   };
+
+  function fmtBytes(n) {
+    n = Number(n) || 0;
+    if (n < 1024) return n + ' B';
+    if (n < 1024 * 1024) return (n / 1024).toFixed(1).replace('.', ',') + ' KB';
+    return (n / (1024 * 1024)).toFixed(1).replace('.', ',') + ' MB';
+  }
 
   function aviso(ok, titulo, detalhe) {
     return '<div class="row tight" style="align-items:flex-start;gap:8px">' +
