@@ -80,6 +80,13 @@ Verificação na implantação: `/api/health` respondeu `d1: true` e `r2: true`;
 `/api/projects` sem token respondeu `401`; senha incorreta respondeu `401`
 (e não `503`, o que confirma o segredo lido corretamente).
 
+Validação ponta a ponta em 19/09/2026, a partir do portal publicado em
+`https://projetos-ept.github.io/latex/`: autenticação concluída, sincronização
+ligada e `PUT /api/projects/...` respondendo `200` sem erro de CORS — o corpo da
+resposta foi lido pela página, o que só ocorre com o preflight aprovado. No D1,
+`projects` recebeu a linha do trabalho e `chapters`, os 10 blocos da estrutura
+ABNT. Navegador → Worker → banco confirmado.
+
 ## Como recriar o ambiente por linha de comando
 
 O `wrangler.toml` já contém os identificadores reais, então basta:
