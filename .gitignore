@@ -4,6 +4,7 @@ package-lock.json
 
 # cloudflare / wrangler
 .wrangler/
+.wrangler-test/
 .dev.vars
 .env
 

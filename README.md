@@ -109,8 +109,14 @@ rede é feita.
 ## Situação atual
 
 Frontend, motores ABNT/BibTeX/LaTeX, exportação e Worker estão **implementados**.
-O que falta são os **dados da infraestrutura** (IDs do D1, bucket R2, segredos e
-URL do Worker): veja **[PENDENCIAS.md](PENDENCIAS.md)**.
+A infraestrutura Cloudflare está **provisionada e testada**: Worker
+`portal-tcc-api`, banco D1 `portal-tcc` e bucket R2 `portal-tcc-arquivos`, com
+os segredos cadastrados. O portal já aponta para essa API por padrão, mas a
+sincronização só liga quando você autenticar em **Configurações**.
+
+O que ainda depende de um clique seu está em **[PENDENCIAS.md](PENDENCIAS.md)**
+(publicar o Pages, republicar o Worker após mudanças no código e ativar a
+sincronização).
 
 ## Documentação
 

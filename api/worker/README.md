@@ -13,6 +13,10 @@ sincronizar entre dispositivos e para enviar arquivos.
 
 ## Implantação
 
+> Ambiente atual: publicado pelo dashboard em 19/09/2026 (ver `PENDENCIAS.md`).
+> Ao alterar `src/index.js`, republique — colando o arquivo no editor do
+> dashboard ou conectando o repositório em *Settings → Build*.
+
 ```bash
 cd api/worker
 npm install
@@ -76,6 +80,12 @@ Todas as rotas, exceto `/api/health` e `/api/auth/login`, exigem
   (ex.: `https://usuario.github.io`).
 - Upload limitado a 25 MB por arquivo; o nome é normalizado antes de virar chave.
 - `audit_log` registra tentativas de login.
+- Força bruta: 10 falhas do mesmo IP em 15 minutos passam a responder `429`
+  até a janela expirar (contagem feita sobre `audit_log`; se o banco estiver
+  indisponível, o login legítimo não é bloqueado).
+- A senha é comparada em tempo constante, sem vazar tamanho ou prefixo.
+- Upload valida se o projeto já existe no banco antes de gravar no R2 e desfaz
+  o objeto caso o registro em `files` falhe, evitando arquivos órfãos.
 
 ## Modelo de dados
 

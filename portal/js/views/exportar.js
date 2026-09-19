@@ -134,9 +134,14 @@
       });
       U.on(root, 'click', '[data-act="upload"]', function () {
         U.pickFile('', function (buffer, file) {
-          P.Api.uploadFile(file, prj.id).then(function (r) {
-            U.toast('Arquivo enviado: ' + (r.chave || file.name), 'ok');
-          }, function (err) { U.toast(err.message, 'err'); });
+          U.toast('Enviando ' + file.name + '…');
+          // O arquivo é vinculado ao projeto no banco, então o projeto precisa
+          // existir no servidor antes do envio.
+          P.Api.saveProject(prj)
+            .then(function () { return P.Api.uploadFile(file, prj.id); })
+            .then(function (r) {
+              U.toast('Arquivo enviado: ' + (r.nome || file.name), 'ok');
+            }, function (err) { U.toast(err.message, 'err'); });
         }, false);
       });
     }

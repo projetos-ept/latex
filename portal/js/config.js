@@ -1,12 +1,11 @@
 /* ==========================================================================
    Portal TCC ABNT - configuração
    --------------------------------------------------------------------------
-   PENDENTE DE PREENCHIMENTO (ver PENDENCIAS.md):
-     apiBaseUrl  -> URL pública do Cloudflare Worker (api/worker)
-     r2PublicUrl -> domínio público do bucket R2, se houver
-   Enquanto apiBaseUrl estiver vazio, o portal opera 100% em modo local
-   (armazenamento no navegador). Nada quebra: a sincronização fica desligada
-   e pode ser ligada em Configurações sem alterar código.
+   apiBaseUrl  -> URL pública do Cloudflare Worker (api/worker)
+   r2PublicUrl -> domínio público do bucket R2, se houver
+   Os valores abaixo são apenas o padrão: o que for salvo em Configurações
+   tem precedência. Com apiBaseUrl vazio, o portal opera 100% em modo local
+   (armazenamento no navegador) e nenhuma chamada de rede é feita.
    ========================================================================== */
 (function (P) {
   'use strict';
@@ -15,10 +14,11 @@
     appName: 'Portal TCC ABNT',
     version: '1.0.0',
 
-    /* ---- integração remota (pendente) ---- */
-    apiBaseUrl: '',          // ex.: 'https://portal-tcc-api.<subdominio>.workers.dev'
-    r2PublicUrl: '',         // ex.: 'https://arquivos.seudominio.br'
-    syncEnabled: false,      // ligado automaticamente quando apiBaseUrl é definido
+    /* ---- integração remota ---- */
+    // Worker publicado em 19/09/2026 (Cloudflare D1 + R2).
+    apiBaseUrl: 'https://portal-tcc-api.lucas-batista-biomedico.workers.dev',
+    r2PublicUrl: '',         // bucket privado: os arquivos são servidos pelo Worker
+    syncEnabled: false,      // ligue em Configurações após autenticar
 
     /* ---- comportamento ---- */
     autosaveMs: 900,

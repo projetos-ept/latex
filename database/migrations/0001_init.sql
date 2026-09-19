@@ -5,7 +5,8 @@
 --   wrangler d1 execute portal-tcc --remote --file=database/migrations/0001_init.sql
 -- =============================================================================
 
-PRAGMA foreign_keys = ON;
+-- Observação: o D1 já aplica integridade referencial e recusa PRAGMAs de
+-- configuração no console — por isso nenhum PRAGMA é declarado aqui.
 
 -- ------------------------------------------------------------------ usuários --
 CREATE TABLE IF NOT EXISTS users (
