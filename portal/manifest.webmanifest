@@ -1,0 +1,21 @@
+{
+  "name": "Portal TCC ABNT",
+  "short_name": "TCC ABNT",
+  "description": "Escrita de TCC, dissertação e tese em blocos, com referências ABNT e exportação LaTeX/Overleaf.",
+  "lang": "pt-BR",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#f5f6f8",
+  "theme_color": "#12203a",
+  "icons": [
+    { "src": "icons/icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" },
+    { "src": "icons/icon-maskable.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "maskable" }
+  ],
+  "shortcuts": [
+    { "name": "Editor de blocos", "url": "./index.html#/editor" },
+    { "name": "Biblioteca", "url": "./index.html#/biblioteca" },
+    { "name": "Exportar", "url": "./index.html#/exportar" }
+  ]
+}

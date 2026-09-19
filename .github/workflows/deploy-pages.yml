@@ -1,0 +1,59 @@
+# =============================================================================
+# Publica o portal (pasta portal/) no GitHub Pages
+# Ative em: Settings → Pages → Source: GitHub Actions
+# =============================================================================
+name: Publicar portal
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'portal/**'
+      - '.github/workflows/deploy-pages.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  verificar:
+    name: Verificação estática
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Sintaxe dos módulos JavaScript
+        run: |
+          for arquivo in $(find portal/js -name '*.js'); do
+            node --check "$arquivo"
+          done
+          node --check portal/sw.js
+      - name: Validar manifest e dados
+        run: |
+          node -e "JSON.parse(require('fs').readFileSync('portal/manifest.webmanifest','utf8'))"
+          node -e "JSON.parse(require('fs').readFileSync('dados/referencias.json','utf8'))"
+          node -e "JSON.parse(require('fs').readFileSync('templates/estruturas-abnt.json','utf8'))"
+
+  publicar:
+    name: Publicar no Pages
+    needs: verificar
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: portal
+      - id: deployment
+        uses: actions/deploy-pages@v4
