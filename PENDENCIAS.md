@@ -8,19 +8,29 @@ referência para recriar o ambiente.
 
 ## Em aberto
 
-### 1. Republicar o Worker após mudanças no código
+### 1. Publicar o Worker a partir do repositório (elimina a colagem manual)
 
-O Worker foi implantado colando `api/worker/src/index.js` no editor do
-dashboard. **Sempre que esse arquivo mudar no repositório, é preciso colar a
-versão nova e clicar em Deploy** — o dashboard não acompanha o Git.
+O Worker hoje é atualizado colando `api/worker/src/index.js` no editor do
+dashboard. Isso já corrompeu o código duas vezes: uma colagem quebrou os
+acentos e outra perdeu um parêntese, exigindo conserto à mão dentro do editor —
+ou seja, não há garantia de que o que está no ar seja idêntico à fonte.
 
-Pendente agora: as correções de 19/09/2026 (bloqueio de força bruta no login e
-tratamento de upload sem projeto sincronizado) ainda não estão publicadas.
+Solução definitiva, em *Workers & Pages → portal-tcc-api → Settings → Build*:
+conecte o repositório `projetos-ept/latex`, branch `main`, **diretório raiz
+`api/worker`**. A partir daí cada push publica a versão exata do repositório.
 
-Alternativa definitiva, que elimina a colagem manual: em *Workers & Pages →
-portal-tcc-api → Settings → Build*, conectar o repositório GitHub com diretório
-raiz `api/worker`. A partir daí o `wrangler.toml` deste repositório (que já tem
-o `database_id` correto) passa a comandar os deploys.
+Pontos de atenção:
+
+- as `[vars]` do `wrangler.toml` passam a mandar e **sobrescrevem** o que estiver
+  no dashboard — por isso `ORIGENS_PERMITIDAS` já está com o valor correto lá;
+- os segredos (`ADMIN_SENHA`, `TOKEN_SEGREDO`) **não** são tocados pelo deploy:
+  continuam como foram cadastrados;
+- o `database_id` no `wrangler.toml` já é o real, então os bindings vêm do
+  arquivo.
+
+**Como saber qual código está no ar:** `GET /api/health` devolve o campo
+`build`. O valor atual do repositório é `2026-09-19.3`. Se a resposta trouxer
+valor diferente (ou nenhum), o deploy não subiu a versão corrente.
 
 ### 2. Publicar o portal no GitHub Pages
 
