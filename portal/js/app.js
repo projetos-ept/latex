@@ -110,8 +110,22 @@
     App.render();
   }
 
+  /**
+   * Garante que o que está na tela já esteja no estado antes de sincronizar,
+   * salvar ou sair — o editor grava com atraso.
+   */
+  App.flush = function () {
+    if (typeof App.flushEditor === 'function') {
+      try { App.flushEditor(); } catch (e) { console.error('[flush]', e); }
+    }
+    P.Store.saveNow();
+  };
+
   App.render = function () {
     var view = P.Views[App.current];
+    // O nó do editor é descartado a cada render: o flush antigo apontaria para
+    // campos que não existem mais.
+    App.flushEditor = null;
     // Troca o nó por um novo: as telas registram handlers delegados na raiz e,
     // sem isso, eles se acumulariam a cada renderização.
     var anterior = U.qs('#view');
@@ -196,6 +210,7 @@
       U.qs('#scrim').classList.remove('is-open');
     });
     U.on(document, 'click', '#syncBtn', function (ev, btn) {
+      App.flush();
       btn.disabled = true;
       btn.textContent = 'Sincronizando…';
       P.Api.sync().then(function (r) {
@@ -227,7 +242,7 @@
       var digitando = tag === 'input' || tag === 'textarea' || tag === 'select';
       if ((ev.ctrlKey || ev.metaKey) && ev.key.toLowerCase() === 's') {
         ev.preventDefault();
-        P.Store.saveNow();
+        App.flush();
         U.toast('Alterações salvas', 'ok');
         return;
       }
@@ -238,6 +253,8 @@
 
     P.Store.on('references', function () { App.renderNav(); });
     P.Store.on('projects', function () { App.renderTopbar(); });
+
+    window.addEventListener('beforeunload', App.flush);
 
     route();
 

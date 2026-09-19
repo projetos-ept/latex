@@ -344,6 +344,40 @@
         marcaSalvo('salvo');
       }, P.config.autosaveMs);
 
+      /**
+       * Grava na hora o que ainda está apenas no DOM. Como o autosave é adiado,
+       * sincronizar (ou fechar a aba) logo após digitar deixaria para trás a
+       * última alteração. Registrado no shell e chamado antes dessas ações.
+       */
+      P.App.flushEditor = function () {
+        U.qsa('[data-block]', root).forEach(function (node) {
+          var id = node.getAttribute('data-block');
+          var blk = S.block(prj.id, id);
+          if (!blk) return;
+          var patch = {};
+          U.qsa('[data-field]', node).forEach(function (campo) {
+            var nome = campo.getAttribute('data-field');
+            if (campo.value !== blk[nome]) patch[nome] = campo.value;
+          });
+          if (Object.keys(patch).length) S.updateBlock(prj.id, id, patch, { skipHistory: true });
+        });
+
+        var card = U.qs('[data-resumo]', root);
+        if (card) {
+          var meta = {};
+          U.qsa('[name]', card).forEach(function (campo) {
+            var nome = campo.getAttribute('name');
+            var valor = (nome === 'palavrasChave' || nome === 'keywords')
+              ? campo.value.split(/[;,]/).map(U.trim).filter(Boolean)
+              : campo.value;
+            if (String(valor) !== String(prj.meta[nome])) meta[nome] = valor;
+          });
+          if (Object.keys(meta).length) {
+            S.updateProject(prj.id, function (p) { Object.assign(p.meta, meta); });
+          }
+        }
+      };
+
       /* ------------------------------------------------- versões (blur) --- */
 
       var focusValues = {};
