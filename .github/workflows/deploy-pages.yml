@@ -36,6 +36,9 @@ jobs:
             node --check "$arquivo"
           done
           node --check portal/sw.js
+      - name: Verificar o LaTeX gerado
+        run: node tests/verifica-geracao.js
+
       - name: Validar manifest e dados
         run: |
           node -e "JSON.parse(require('fs').readFileSync('portal/manifest.webmanifest','utf8'))"
