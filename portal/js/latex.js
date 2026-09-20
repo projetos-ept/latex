@@ -293,9 +293,17 @@
     return U.trim(meta.subtitulo) ? t + ': ' + metaEsc(meta.subtitulo) : t;
   }
 
+  // Titulações que o autor costuma digitar junto do nome.
+  var RE_TITULACAO = /^\s*(prof|profa|professor|professora|dr|dra|doutor|doutora|me|ma|mestre|mestra|msc|m\.?sc|esp|especialista|ph\.?\s*d)\b\.?/i;
+
+  /**
+   * Junta titulação e nome sem duplicar: quem escreve "Prof. Me. Fulano" no
+   * campo do nome não deve receber o prefixo padrão "Prof. Dr." por cima.
+   */
   function nomeComTitulo(titulacao, nome, padrao) {
     var n = U.trim(nome);
     if (!n) return metaEsc(padrao);
+    if (RE_TITULACAO.test(n)) return metaEsc(n);
     return metaEsc([U.trim(titulacao), n].filter(Boolean).join(' '));
   }
 
@@ -721,32 +729,48 @@
   function folhaAprovacao(project) {
     var meta = project.meta;
     var nivel = M.nivel(meta.nivel);
-    return [
+    var linhas = [
       '% Folha de aprovação — substitua pelo PDF assinado pela banca após a defesa.',
       '\\begin{center}',
-      '  \\textbf{' + metaEsc(U.upper(meta.autor || 'Nome do autor')) + '}\\\\[1cm]',
-      '  \\textbf{' + metaEsc(meta.titulo) + '}\\\\[2cm]',
+      '  \\textbf{' + metaEsc(U.upper(meta.autor || 'Nome do autor')) + '}',
+      '',
+      '  \\vspace{1cm}',
+      '',
+      '  \\textbf{' + tituloCompleto(meta) + '}',
       '\\end{center}',
       '',
-      '\\noindent ' + metaEsc(nivel.tipoTrabalho) + ' aprovado em \\rule{3cm}{0.4pt} de \\rule{3cm}{0.4pt} de ' + metaEsc(meta.ano) + '.',
+      '\\vspace{2cm}',
+      '\\noindent ' + metaEsc(nivel.tipoTrabalho) + ' aprovado em \\rule{3cm}{0.4pt} de ' +
+        '\\rule{3cm}{0.4pt} de ' + (metaEsc(meta.ano) || '\\rule{1.5cm}{0.4pt}') + '.',
       '',
       '\\vspace{2cm}',
       '\\noindent \\textbf{Banca examinadora}',
-      '',
-      '\\vspace{1.5cm}',
-      '\\noindent \\rule{10cm}{0.4pt} \\\\',
-      metaEsc((meta.orientadorTitulo || 'Prof. Dr.') + ' ' + (meta.orientador || '[Orientador]')) + ' — orientador(a) \\\\',
-      metaEsc(meta.instituicao || '[Instituição]'),
-      '',
-      '\\vspace{1.5cm}',
-      '\\noindent \\rule{10cm}{0.4pt} \\\\',
-      'Prof. Dr. [Nome] \\\\ [Instituição]',
-      '',
-      '\\vspace{1.5cm}',
-      '\\noindent \\rule{10cm}{0.4pt} \\\\',
-      'Prof. Dr. [Nome] \\\\ [Instituição]',
       ''
-    ].join('\n');
+    ];
+
+    membroBanca(linhas,
+      nomeComTitulo(meta.orientadorTitulo, meta.orientador, 'Prof. Dr. (nome do orientador)') + ' --- orientador(a)',
+      metaEsc(meta.instituicao) || '(instituição)');
+    membroBanca(linhas, 'Prof. Dr. (nome do examinador)', '(instituição)');
+    membroBanca(linhas, 'Prof. Dr. (nome do examinador)', '(instituição)');
+
+    return linhas.join('\n');
+  }
+
+  /**
+   * Cada assinatura da banca é composta por parágrafos, não por \\.
+   * Uma quebra \\ seguida de linha iniciada por colchete é lida pelo LaTeX como
+   * o argumento opcional de espaçamento (\\[dimensão]) e aborta a compilação —
+   * foi o que aconteceu com os antigos marcadores "[Instituição]".
+   */
+  function membroBanca(linhas, nome, instituicao) {
+    linhas.push('\\vspace{1.5cm}');
+    linhas.push('\\noindent \\rule{10cm}{0.4pt}');
+    linhas.push('');
+    linhas.push('\\noindent ' + nome);
+    linhas.push('');
+    linhas.push('\\noindent ' + instituicao);
+    linhas.push('');
   }
 
   function readme(project, engine) {
